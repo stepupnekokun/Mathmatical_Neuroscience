@@ -65,7 +65,7 @@ x=[0.0 for i in range(n) ]
 count=[0 for i in range(20) ]
 y=[0.0 for i in range(20) ]
 
-while a!=500:
+while a!=1025:
     memories=gene_memories()
     set_weigth()
     init_x()

@@ -65,7 +65,7 @@ x=[0.0 for i in range(n) ]
 count=[0 for i in range(20) ]
 y=[0.0 for i in range(20) ]
 
-while a!=500:
+while a!=1025:
     memories=gene_memories()
     set_weigth()
     init_x()
@@ -81,6 +81,8 @@ while a!=500:
     a+=25
 
 plt.xlim(0,20)
-plt.ylim(0.2,1)
+plt.ylim(-0.2,1)
+plt.xlabel("TIME")
+plt.ylabel("DIRECTON COSINE")
 plt.tick_params(labelsize=10)
 plt.show()
