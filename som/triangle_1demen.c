@@ -5,8 +5,8 @@
 #include <time.h>
 
 #define IN_SIGNAL 2
-#define NEURON_X 16
-#define NEURON_Y 16
+#define NEURON_X 64
+#define NEURON_Y 1
 #define NEURON_LEARN 150
 #define SUB_NEURON_LEARN 100
 
@@ -28,9 +28,9 @@ int main (int argc, char *argv[] ){
     double m1;
 
     srand((unsigned)time(NULL));
-    gp = popen("gnuplot -persist","w");
-    fprintf(gp, "set terminal gif animate optimize delay 10 size 400,400\n");
-    fprintf(gp, "set output 'triangle.gif'\n");
+    gp = popen("gnuplot ","w");
+    // fprintf(gp, "set terminal gif animate optimize delay 10 size 400,400\n");
+    // fprintf(gp, "set output 'triangle.gif'\n");
     fprintf(gp, "set size ratio 1\n");
     fprintf(gp, "set style data linespoints\n");//線ができる
     fprintf(gp, "set xlabel \"Neural Fields\"\n");
@@ -44,6 +44,10 @@ int main (int argc, char *argv[] ){
         
         fprintf(gp, "set title 't = %d/%d sigma =%lf alpha = %lf'\n",i*SUB_NEURON_LEARN+100, NEURON_LEARN*SUB_NEURON_LEARN,SIGMA,ALPHA);
         fprintf(gp, "plot '-' linestyle 5\n");
+        fprintf(gp,"%d\t%d\n",-1,-1);
+        fprintf(gp,"%d\t%d\n",0,1);
+        fprintf(gp,"%d\t%d\n",1,-1);
+        fprintf(gp,"\n");
         fflush(gp);
 
         //書き込み回数を減らし、処理を軽くする
@@ -55,15 +59,13 @@ int main (int argc, char *argv[] ){
         for(j=0; j<NEURON_X; j++){
             for(k=0; k<NEURON_Y; k++){
                 fprintf(gp, "%lf\t%lf\n",m[j][k][0],m[j][k][1]);
-            }
-            fprintf(gp,"\n");                                
+            }                              
+            fprintf(gp,"\n");
         }
         for(k=0; k<NEURON_X; k++){
             for(j=0; j<NEURON_Y; j++){
                 fprintf(gp, "%lf\t%lf\n",m[j][k][0],m[j][k][1]);
-
-            }
-            fprintf(gp,"\n");                                
+            }            
         }
         
         fprintf(gp, "e\n");               
@@ -83,7 +85,7 @@ void init_ref_vec(){
     for(i=0; i<NEURON_X; i++){
         for(j=0; j<NEURON_Y; j++){
             for(k=0; k<IN_SIGNAL; k++){
-                m[i][j][k] = (double)(rand()-(RAND_MAX/2))/(RAND_MAX/2);
+                m[i][j][k] = (double)(rand()-(RAND_MAX/2))/(RAND_MAX/2)*0.1;
             }
             if(m[i][j][0]<=0){
                 m1=2*m[i][j][0]+1;
