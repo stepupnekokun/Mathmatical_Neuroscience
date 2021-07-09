@@ -5,8 +5,8 @@
 #include <time.h>
 
 #define IN_SIGNAL 2
-#define NEURON_X 10
-#define NEURON_Y 10
+#define NEURON_X 16
+#define NEURON_Y 16
 #define NEURON_LEARN 150
 #define SUB_NEURON_LEARN 100
 
@@ -29,13 +29,13 @@ int main (int argc, char *argv[] ){
 
     srand((unsigned)time(NULL));
     gp = popen("gnuplot ","w");
-    fprintf(gp, "set terminal gif animate optimize delay 10 size 400,400\n");
-    fprintf(gp, "set output 'triangle.gif'\n");
+    // fprintf(gp, "set terminal gif animate optimize delay 10 size 400,400\n");
+    // fprintf(gp, "set output 'triangle.gif'\n");
     fprintf(gp, "set size ratio 1\n");
     fprintf(gp, "set style data linespoints\n");//線ができる
     fprintf(gp, "set xlabel \"Neural Fields\"\n");
     fprintf(gp,"set xrange[-1:1]\n");
-    fprintf(gp, "set yrange[0:1]\n");
+    fprintf(gp, "set yrange[-1:1]\n");
     fprintf(gp, "set border 5\n");
     fflush(gp);
 
@@ -86,11 +86,11 @@ void init_ref_vec(){
                 m[i][j][k] = (double)(rand()-(RAND_MAX/2))/(RAND_MAX/2);
             }
             if(m[i][j][0]<=0){
-                m1=m[i][j][0]+1;
+                m1=2*m[i][j][0]+1;
             }else{
-                m1=-m[i][j][0]+1;
+                m1=-2*m[i][j][0]+1;
             }
-            if(0>m[i][j][1] || m[i][j][1]>m1){
+            if(-1>m[i][j][1] || m[i][j][1]>m1){
                 j -= 1;
             }
         }
@@ -106,11 +106,11 @@ void generate_a_input(){
         x[i] = (double)(rand()-(RAND_MAX/2))/(RAND_MAX/2);
     }
     if(x[0]<=0){
-        m1=x[0]+1;
+        m1=2*x[0]+1;
     }else{
-        m1=-x[0]+1;
+        m1=-2*x[0]+1;
     }
-    if(0>x[1] || x[1]>m1){
+    if(-1>x[1] || x[1]>m1){
         generate_a_input();
     }
 }
